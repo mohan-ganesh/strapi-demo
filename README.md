@@ -55,3 +55,8 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 ---
 
 <sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+
+gcloud builds submit --tag gcr.io/$PROJECT_ID/strapi
+
+gcloud run deploy strapi --image gcr.io/$PROJECT_ID/strapi \
+--vpc-connector=strapi-connector
