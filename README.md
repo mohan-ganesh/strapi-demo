@@ -56,7 +56,19 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 
 <sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
 
+gcloud iam service-accounts create strapi \
+ --description="Service account for Strapi " \
+ --display-name="strapi"
+
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+ --member="serviceAccount:strapi@$PROJECT_ID.iam.gserviceaccount.com" \
+ --role="roles/iam.serviceAccountUser"
+
 gcloud builds submit --tag gcr.io/$PROJECT_ID/strapi
 
 gcloud run deploy strapi --image gcr.io/$PROJECT_ID/strapi \
---vpc-connector=strapi-connector
+ --vpc-connector=strapi-connector \
+ --region=us-central1 \
+ --vpc-egress=private-ranges-only \
+ --no-allow-unauthenticated \
+ --service-account=strapi
